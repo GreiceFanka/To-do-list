@@ -44,10 +44,10 @@ router.post('/', async (req,res) =>{
 
 router.get('/:id', async(req,res) =>{
     try {
-        let checklist = await Checklist.findById(req.params.id);
+        let checklist = await(Checklist.findById(req.params.id)).populate('tasks');
         res.status(200).render('checklists/show',{checklist:checklist})
     } catch (error) {
-        res.status(500).render('pages/error/index',{error:'Erro ao exibir as Listas de tarefas'});
+        res.status(500).render('pages/error',{error:'Erro ao exibir as Listas de tarefas'});
     }
 })
 
@@ -55,7 +55,7 @@ router.put('/:id', async (req,res) =>{
     let{name} = req.body.checklist;
     let checklist = await Checklist.findById(req.params.id);
 try {
-     await Checklist.update({name});
+     await checklist.update({name});
      res.redirect('/checklists');
 } catch (error) {
     let errors = error.errors;
@@ -66,9 +66,9 @@ try {
 router.delete('/:id', async(req,res) =>{
     try {
         let checklist = await Checklist.findByIdAndRemove(req.params.id);
-        res.status(200).json(checklist);
+        res.redirect('/checklists');
     } catch (error) {
-        res.status(422).json(error);
+        res.status(500).render('pages/error',{error:'Erro ao deletar as Listas de tarefas'});
     }
 })
 

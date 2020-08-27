@@ -20,7 +20,7 @@
                 <%= checklist.name %>
               </p>
               <p class="subtitle is-size-6">
-                <%= checklist.tasks.count%> Tarefas
+                <%= checklist.tasks.length%> Tarefas
               </p>
             </div>
             <footer class="card-footer">
@@ -36,7 +36,7 @@
               </p>
               <p class="card-footer-item">
                 <span>
-                  <a href="#" class="has-text-danger">Remover</a>
+                  <a href="/checklists/<%= checklist.id %>?_method=DELETE" class="has-text-danger">Remover</a>
                 </span>
               </p>
             </footer>
